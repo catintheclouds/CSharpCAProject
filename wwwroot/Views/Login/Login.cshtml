@@ -1,0 +1,103 @@
+﻿@model ShoppingCart.Models.Customer
+@{
+    Layout = "_Layout2";
+    ViewData["Title"] = "Login";
+    var status = ViewData["LoginStatus"];
+}
+<script type='text/javascript' src='//ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js'></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<h1>Login</h1>
+<body onload="Captcha();">
+
+
+    <div id="login-div">
+
+        <form id="loginForm" method="post" asp action="add">
+
+            @*//table*@
+            <table style="width:100%">
+                <tr>
+                    <td style="width: 13%;"><p style="font-weight:bold">Email:
+                    <td> <input type="text" name="Email" required value="" /></td>
+
+                </tr>
+                <tr>
+                    <td><p style="font-weight:bold">Password:</p></td>
+                    <td><input type="password" name="Password" required value="" /></td>
+
+                </tr>
+              
+                <tr><td colspan="2"><br /><br /><h5>Please verify code</h5></td>
+                <tr>
+                    <td colspan="2">
+                        <div class="capt">
+
+                            <h2 type="text" id="mainCaptcha"></h2>
+
+                            <p>
+                                <button type="button" class="btn" id="refresh" onclick="Captcha();">
+                                    <i class="fa fa-refresh"></i>
+                                </button>
+                               
+                            </p>
+                            <input type="text" id="txtInput" onpaste="return false;" onCopy="return false" onCut="return false" onDrag="return false" onDrop="return false" />
+                            <input id="Button1" type="button" value="Check" onclick="alert(ValidCaptcha());" />
+                        </div>
+
+                    </td>
+
+                </tr>
+
+            </table>
+
+            <input id="btnLogin" type="submit" name="name" value="Login" disabled />
+            <input type="hidden" name="sessionId" value="" />
+            <input type="hidden" name="status" value="@status" />
+
+
+
+
+        </form>
+
+</body>
+<script>
+    // For Captach (I,i,L,l,1 and 0,o) is taken out to prevent misreading
+    $(document).ready(function () {
+        Captcha();
+    });
+
+    function Captcha() {
+        var alpha = new Array('A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'J', 'K', 'M', 'N', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z',
+            'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'j', 'k', 'm', 'n', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z',
+            '2', '3', '4', '5', '6', '7', '8', '9');
+        var i;
+        for (i = 0; i < 4; i++)
+        {
+            var a = alpha[Math.floor(Math.random() * alpha.length)];
+            var b = alpha[Math.floor(Math.random() * alpha.length)];
+            var c = alpha[Math.floor(Math.random() * alpha.length)];
+            var d = alpha[Math.floor(Math.random() * alpha.length)];
+         
+        }
+        var code = a + ' ' + b + ' ' + ' ' + c + ' ' + d;
+        document.getElementById("mainCaptcha").innerHTML = code
+        document.getElementById("mainCaptcha").value = code
+    }
+    function ValidCaptcha() {
+        var string1 = removeSpaces(document.getElementById('mainCaptcha').value);
+        var string2 = removeSpaces(document.getElementById('txtInput').value);
+        if (string1 === string2) {
+            document.getElementById("btnLogin").disabled = false;
+            document.getElementById("btnLogin").setAttribute("class", "activated-button");
+            document.getElementById("refresh").disabled = true;
+            return "Successful";
+        } else {
+            document.getElementById("btnLogin").disabled = true;
+            return "Wrong Key!Try Again";
+        }
+    }
+    function removeSpaces(string) {
+        return string.split(' ').join('');
+    }
+
+</script>

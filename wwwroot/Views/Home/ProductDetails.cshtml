@@ -1,0 +1,103 @@
+﻿
+@{
+    Layout = "_Layout2";
+    ViewData["Title"] = "ProductDetails";
+}
+
+@{
+    var productDetails = (Product)ViewData["productDetails"];
+    var similarProducts = (List<Product>)ViewData["similarproducts"];
+    var similartext = (string)ViewData["similarText"];
+}
+
+@{
+
+    var comments = (List<ProductComments>)ViewData["Comments"];
+    var ratingSum =(int) ViewData["RatingSum"];
+    var ratingCount = (int)ViewData["RatingCount"];
+
+    decimal rating = 0;
+    if (ratingCount > 0)
+    {
+        rating = (ratingSum / ratingCount);
+    }
+    var totalRating = decimal.Parse(rating.ToString());
+}
+
+<script type='text/javascript' src='//ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js'></script>
+@*<script src="~/js/ProductPage.js" type="text/javascript"></script>*@
+
+<h1>Product Details</h1>
+<p>
+    <img src=@productDetails.ImageURL alt="@productDetails.Name" style="width: 25%" /><br /><br />
+    <b>Price:</b> $@productDetails.Price<br />
+    <b>Name:</b> @productDetails.Name<br />
+    <b>Category:</b> @productDetails.Category<br />
+    <b>Brand:</b> @productDetails.Brand<br />
+    <b>Description:</b> @productDetails.Description<br />
+    <div>
+        <span class="starFadeN" id="sRate1"> </span>
+        <span class="starFadeN" id="sRate2"> </span>
+        <span class="starFadeN" id="sRate3"></span>
+        <span class="starFadeN" id="sRate4"></span>
+        <span class="starFadeN" id="sRate5"></span>
+    </div>
+    @Html.ActionLink("Add to cart", "AddToCart", "MyCart", new { productid = productDetails.Id }, new { @class = "btn btn-xs btn-outline btn-primary" }) <br />
+    @Html.ActionLink("Back To Gallery", "Index", "Home")
+</p>
+@foreach (var c in comments)
+{
+    <hr />
+    <div class="row">
+        <div class="col-md-3">
+            <i>@c.ThisDateTime</i>
+            <br />
+            @for (var i = 1; i <= c.Rating; i++)
+            {
+                <span class="starGlowN"></span>
+            }
+            @for (var i = (c.Rating + 1); i <= 5; i++)
+            {
+                <span class="starFadeN"></span>
+            }
+        </div>
+        <div class="col-md-9">
+            @if (c.Comments != null)
+                @Html.Raw(c.Comments.Replace("\n", "<br />"))
+
+
+        </div>
+    </div>
+}
+<hr />
+@Html.Partial("_CommentBox", new ViewDataDictionary(ViewData) { { "ProductDetail", productDetails } })
+<script>
+    function SCRate() {
+
+            for (var i = 1; i <= @totalRating; i++) {
+            $("#sRate" + i).attr('class', 'starGlowN');
+
+        }
+    }
+    $(document).ready(function () {
+        SCRate();
+    });
+</script>
+<h2>@similartext</h2>
+<div class="col-md-12 row">
+    @foreach (Product sproduct in similarProducts)
+    {
+        if (sproduct.Id != productDetails.Id)
+        {
+            <div class="col-md-2 text-center align-items-center">
+                <img src=@sproduct.ImageURL alt="@sproduct.Name" style="width:100%" /><br />
+                $@sproduct.Price<br />
+                @Html.ActionLink(sproduct.Name, "ProductDetails", "Home",
+                new { productid = sproduct.Id }, null) <br />
+                @*@sproduct.Category<br />*@
+                @Html.ActionLink("Add to cart", "AddToCart", "MyCart", new { productid = sproduct.Id }, new { @class = "btn btn-xs btn-outline btn-primary" }) <br />
+                @*@sproduct.Description*@
+            </div>
+        }
+    }
+</div>

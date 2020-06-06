@@ -1,0 +1,129 @@
+﻿@{
+    //Layout = "_Layout"; tryout
+    //Layout = "_Layout_ShoppingCart"; tryout
+    ViewData["Title"] = "MyCart";
+    var cartItems = (List<Cart>)ViewData["cartItems"];
+    var cartTotal = (double)ViewData["cartTotalPrice"];
+    int count = 0;
+
+}
+
+    <html lang="en">
+
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+       <link rel="stylesheet" href="~/css/MyCart.css">
+        <script type='text/javascript' src='//ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js'></script>
+        <script src="~/js/MyCart.js" type="text/javascript"></script>
+        <title>Basket</title>
+    </head>
+
+    <body style="height:100%;">
+        @*<main>*@
+            <h1>My Cart</h1>
+            @if (cartItems.Count == 0)
+            {
+                <h3 style="color:red;text-align:center;">Opps ,Your Shopping Cart is Empty . <br />  @Html.ActionLink("Go Shopping Now", "Index", "Home") <br /></h3>
+
+            }
+            else
+            {
+
+                <div class="basket">
+
+                    <div class="basket-labels">
+                        <ul>
+                            <li class="item item-heading">Item</li>
+                            @*<li class="item item-heading">Item</li>*@
+                            <li class="price">Price</li>
+                            <li class="quantity">Quantity</li>
+                            <li class="subtotal">Subtotal</li>
+                        </ul>
+                    </div>
+                    @foreach (var c in cartItems)
+                    {
+
+                        <div class="basket-product">
+
+                            <div class="item">
+                                @*<label class="container">
+
+                              <input type="checkbox" checked="checked" value="@c.Id" >
+                                <span class="checkmark"></span>
+                            </label>*@
+                                <input id="dn" type="checkbox" class="cbx" name="cbx" value="@c.Id" checked style="margin-top:13%;width:40px;" />
+                                <input type="hidden" value="@c.Id" id="hdCartID_@c.Id" />
+                                <div class="product-image">
+                                    <img src="@c.Product.ImageURL" alt="Placholder Image 2" class="product-frame">
+                                </div>
+                                <div class="product-details">
+                                    <h6><strong><span class="item-quantity">@c.Quantity</span></strong> x @c.Product.Name</h6>
+                                    <p style="font-size:small;">@c.Product.Description</p>
+                                </div>
+                            </div>
+                            <div class="price">@c.Product.Price</div>
+                            <form id="ChangeQtyForm_@c.Id" action="/MyCart/ChangeQtyFromCart" method="post">
+
+                                <div class="quantity">
+                                    <button type="button" class="decrease-btn" onclick="DecreaseBtn('@c.Id','@c.Product.Price');">-</button>
+                                    <input type="text" id="cartQty_@c.Id" class="quantity-field" value="@c.Quantity">
+                                    <button type="button" class="increase-btn" onclick="IncreaseBtn('@c.Id','@c.Product.Price');">+</button>
+
+                                    <input id="hdcartQty_@c.Id" name="cartQty" type="hidden" />
+                                    <input id="qtyChangecartID_@c.Id" name="qtyChangecartID" type="hidden" />
+                                    <input id="price_@c.Id" name="price" type="hidden" />
+
+
+                                    @*<input type="number" value="@c.Quantity" min="1" id="Qty_@c.Id" onchange="updateQuantity('@c.Id','@c.Product.Price');" />@Url.Action("ChangeQtyFromCart", "MyCart", new { cartID =c.Id,qty=c.Quantity})
+                                    *@
+                                </div>
+                            </form>
+
+                            <div class="subtotal"><span id="CartSubtotal_@c.Id">@c.Subtotal</span></div>
+                            <div class="remove">
+                                @Html.ActionLink("Remove", "RemoveFromCart", "MyCart", new { cartID = c.Id })
+                            </div>
+                        </div>
+                        count += 1;
+                    }
+                </div>
+            }
+
+
+            <aside>
+                <div class="summary">
+                    <div class="summary-total-items"><span class="total-items"></span> Items in your Bag</div>
+                    <div class="summary-subtotal">
+                        <div class="subtotal-title">Subtotal</div>
+                        <div class="subtotal-value final-value" id="basket-subtotal">@cartTotal</div>
+
+                    </div>
+
+                    <div class="summary-total">
+                        <div class="total-title">Total</div>
+                        <div class="total-value final-value" @*id="basket-total"*@><span id="final_amount">@cartTotal</span></div>
+                    </div>
+                    @if (cartItems.Count == 0)
+                    {
+                        <p>No Items in Cart</p>
+                    }
+                    else
+                    { 
+                        <form id="EditForm" action="/MyCart/CheckOut" method="post">
+                            <div class="summary-checkout">
+                                <button class="checkout-cta" onclick="CheckOut();">Go to Secure Checkout</button>
+                                <input id="todoIds" name="todoIds" type="hidden" />
+                            </div>
+                        </form>
+                    }
+                </div>
+            </aside>
+        @*</main>*@
+        <br />
+        <br />
+        <br />
+    </body>
+
+    </html>

@@ -1,0 +1,35 @@
+﻿
+@using Microsoft.AspNetCore.Http;
+
+@inject IHttpContextAccessor HttpContextAccessor
+<!DOCTYPE html>
+<html lang="en">
+@{
+    var welcome = (string)ViewData["welcome"];
+    //string usernameInSession = HttpContext.Session.GetString("Email");
+    var Email = (string)ViewData["Email"];
+
+}
+
+<div class="mynav_topnav">
+    <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index" style="color:black">@welcome</a>
+    <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+    @if (Email != null)
+    {
+        <a class="nav-link text-dark" asp-area="" asp-controller="Purchase" asp-action="Purchase">My Purchase</a>
+    }
+
+    <div class="mynav_topnav-right">
+        <a class="nav-link text-dark" asp-area="" asp-controller="Mycart" asp-action="Index"><i class="fa fa-shopping-cart" style="font-size:24px"></i> <span class="badge badge-danger" style="font-size:10px">@HttpContextAccessor.HttpContext.Session.GetString("CartCount")@*@ViewData["Counter"]*@</span></a>
+        @if (Email == null)
+        {
+            <a class="nav-link text-dark" asp-area="" asp-controller="Login" asp-action="Login">Login</a>
+        }
+        else
+        {
+            <a class="nav-link text-dark" asp-area="" asp-controller="Login" asp-action="Logout">Logout</a>
+        }
+    </div>
+</div>
+
+</html>
