@@ -1,0 +1,50 @@
+﻿
+@{
+    Layout = "_Layout2";
+    ViewData["Title"] = "Payment";
+    var amount = ViewData["totalPrice"];
+    var todoIds = ViewData["todoIds"];
+}
+
+<h1>Payment</h1>
+<h5>
+    Amount $@amount Payable
+</h5
+
+><form method="post" asp action="Add">
+    <table style="width:100%">
+        <tr>
+            <td style="width: 13%;"><p style="font-weight:bold">Name:</td>
+            <td> <input type="text" name="NameA" required value="" /></td>
+
+        </tr>
+        <tr>
+            <td style="width: 13%;"><p style="font-weight:bold">Address:</p></td>
+            <td><input type="text" name="Address" required value="" /></td>
+
+        </tr>
+        <tr>
+            <td style="width: 13%;"><p style="font-weight:bold">16 Digit Number</p></td>
+            <td><input type="password" minlength="16" maxlength="16" name="CodeA" required value="" /></td>
+
+        </tr>
+        <tr>
+            <td style="width: 13%;"><p style="font-weight:bold">CCV:</p></td>
+            <td><input type="password" minlength="3" maxlength="3" name="CCVA" required value="" /></td>
+
+        </tr>
+        <tr>
+            <td style="width: 13%;"><p style="font-weight:bold">Expiry Date (MMYY):</p></td>
+            <td><input type="text" name="ExDA" required value="" /></td>
+
+        </tr>
+
+    </table>
+    
+
+    <input type="hidden" name="sessionId" value="" />
+    <input type="hidden" name="todoIds" value="@todoIds" />
+    <input type="submit" name="name" value="Submit" />
+
+   
+</form>

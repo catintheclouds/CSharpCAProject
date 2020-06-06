@@ -1,0 +1,134 @@
+﻿
+@{
+    ViewData["Title"] = "Index";
+}
+
+@{
+    var products = (List<Product>)ViewData["products"];
+    var searched = (string)ViewData["searchedinput"];
+    var commentList = (List<ProductComments>)ViewData["comments"];
+    int tCount = (int)ViewData["tCount"];
+    int number = 0;
+    decimal totalRating = 0;
+}
+
+
+
+
+<head>
+    <script type='text/javascript' src='//ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js'></script>
+    <link rel="stylesheet" href="~/css/Homepage.css">
+
+</head>
+
+<h1 class="headerh1">Products</h1>
+
+<div class="row">
+    <div class="col-9 searchRow">
+        <form id="searchForm" action="/Home/Index" method="post">
+            <input id="searchBar" class="form-control" type="text" name="searchinput" placeholder="Search" aria-label="Search" value="@searched">
+            <button id="searchButton" type="submit" style="position: absolute; left: -9999px"></button>
+        </form>
+    </div>
+    <div class="col-3 sorterClass">
+        <select onchange="sortinghat()" id="sorterId" class="custom-select">
+            <option value="a0">Sorting Options...</option>
+            <option value="rating">Order By Rating</option>
+            <option value="alphabetically">Order Alphabetically</option>
+            <option value="price ascending">Order By Price Ascending</option>
+            <option value="price descending">Order By Price Descending</option>
+        </select>
+    </div>
+</div>
+<div class="row">
+    @foreach (var product in products)
+    {
+
+
+
+        var ratings = commentList.Where(d => d.ProductId.Equals(product.Id)).ToList();
+        var ratingSum = 0;
+
+        var ratingCount = 0;
+
+        if (ratings.Count() > 0)
+        {
+            ratingSum = ratings.Sum(d => d.Rating.Value);
+
+            ratingCount = ratings.Count();
+
+        }
+
+        decimal rating = 0;
+        if (ratingCount > 0)
+        {
+            rating = (ratingSum / ratingCount);
+        }
+        totalRating = decimal.Parse(rating.ToString());
+
+
+
+        //This is the original code without ripping off CSS from another site
+        @*<div class="col-md-3 row mainbox">
+                <div class="col-md-12 imgbox">
+                    <img src=@product.ImageURL alt="@product.Name" style="width: 100%" />
+                </div>
+                <div class="col-md-12 textbox">
+                    $@product.Price<br />
+                    @Html.ActionLink(@product.Name, "ProductDetails", "Home",
+                    new { productid = product.Id }, null) <br />
+                    @Html.ActionLink("Add to cart", "AddToCart", "MyCart", new { productid = product.Id }) <br />
+                    @product.Description
+                </div>
+                <div class="col-md-12">
+                    <p align="center"></p>
+                </div>
+            </div>*@
+        number++;
+        <div class="col-md-3">
+            <div class="ibox">
+                <div class="ibox-content product-box">
+                    <div class="product-imitation">
+                        <a href="@Url.Action("ProductDetails", "Home", new { productid = product.Id })">
+                            <img src=@product.ImageURL alt="@product.Name" style="width: 100%" />
+                        </a>
+                    </div>
+                    <div class="product-desc">
+                        <span class="product-price">
+                            $@product.Price
+                        </span>
+                        <small class="text-muted">@product.Category</small>
+
+                        <div>
+
+                            @for (var i = 1; i <= @totalRating; i++)
+                            {
+                                <span class="starGlowN" id="sRate1"></span>
+                            }
+                            @for (var j = 1; j <= 5 - @totalRating; j++)
+                            {
+                                <span class="starFadeN" id="sRate1"></span>
+                            }
+                            @*<span class="starFadeN" id="sRate1_@product.Id"></span>
+                            <span class="starFadeN" id="sRate2_@product.Id"></span>
+                            <span class="starFadeN" id="sRate3_@product.Id"></span>
+                            <span class="starFadeN" id="sRate4_@product.Id"></span>
+                            <span class="starFadeN" id="sRate5_@product.Id"></span>*@
+                        </div>
+
+                        @Html.ActionLink(@product.Name, "ProductDetails", "Home",
+                                        new { productid = product.Id }, new { @class = "product-name" })
+                        <div class="m-t text-left">
+                            @Html.ActionLink("Add To Cart", "AddToCart", "MyCart",
+                           new { productid = product.Id }, new { @class = "btn btn-xs btn-outline btn-primary" })
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+      
+    }
+    <input type="hidden" id="tCount" value="@tCount" />
+    <input type="hidden" id="number" value="@number" />
+</div>
+
