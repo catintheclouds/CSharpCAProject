@@ -1,0 +1,224 @@
+﻿/* Please see documentation at https://docs.microsoft.com/aspnet/core/client-side/bundling-and-minification
+for details on configuring this project to bundle and minify static web assets. */
+
+.activated-button {
+    background-color: mediumpurple !important;
+    color: white !important;
+}
+
+.mynav_topnav {
+    overflow: hidden;
+    background-color: #dbe2ef;
+    border-bottom: solid;
+}
+
+    .mynav_topnav a {
+        float: left;
+        color: #f2f2f2;
+        text-align: center;
+        padding: 14px 16px;
+        text-decoration: none;
+        font-size: 17px;
+    }
+
+        .mynav_topnav a:hover {
+            background-color: #a6b1e1;
+            color: black;
+        }
+
+        .mynav_topnav a.mynav_active {
+            background-color: #a6b1e1;
+            color: white;
+        }
+
+
+.mynav_topnav-right {
+    float: right;
+}
+
+
+a.navbar-brand {
+  white-space: normal;
+  text-align: center;
+  word-break: break-all;
+}
+
+
+/* Provide sufficient contrast against white background */
+a {
+    color: #7e6bc4;
+}
+
+.btn-primary {
+  color: #fff;
+  background-color: #1b6ec2;
+  border-color: #1861ac;
+}
+
+.nav-pills .nav-link.active, .nav-pills .show > .nav-link {
+    color: #dcd6f7;
+    background-color: #1b6ec2;
+    border-color: #1861ac;
+}
+
+/* Sticky footer styles
+-------------------------------------------------- */
+html {
+  font-size: 14px;
+}
+@media (min-width: 768px) {
+  html {
+    font-size: 16px;
+  }
+}
+
+.border-top {
+  border-top: 1px solid #e5e5e5;
+}
+.border-bottom {
+  border-bottom: 1px solid #e5e5e5;
+}
+
+.box-shadow {
+  box-shadow: 0 .25rem .75rem rgba(0, 0, 0, .05);
+}
+
+button.accept-policy {
+  font-size: 1rem;
+  line-height: inherit;
+}
+
+/* Sticky footer styles
+-------------------------------------------------- */
+html {
+  position: relative;
+  min-height: 100%;
+}
+mynav_topnav {
+    background-color: #a6b1e1;
+}
+
+body {
+    /* Margin bottom by footer height */
+    margin-bottom: 60px;
+    background-color: #f4eeff;
+}
+th {
+    font-weight: normal;
+}
+input[type=text], input[type=password] {
+    width: 61%;
+    padding: 12px 20px;
+    margin: 0px 0px;
+    display: inline-block;
+    border: 1px solid #ccc;
+    box-sizing: border-box;
+}
+btnLogin {
+    background-color: #dcd6f7;
+    color: #424874;
+    padding: 14px 20px;
+    margin: 8px 0;
+    border: none;
+    cursor: pointer;
+    width: 10%;
+    text-align: center;
+}
+input[type=submit] {
+    background-color: #dcd6f7;
+    color: #424874;
+    padding: 14px 20px;
+    margin: 8px 0;
+    border: none;
+    cursor: pointer;
+    width: 15%;
+    text-align: center;
+}
+
+
+
+
+
+.footer {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  white-space: nowrap;
+  line-height: 60px; /* Vertically center the text there */
+}
+/*----------------------------------------*/
+.commentBox {
+    background-color: #efefef;
+    padding: 10px;
+    border-radius: 10px;
+}
+
+.starFade {
+    background-image: url('../Images/StarFade.gif');
+    min-width: 30px;
+    min-height: 30px;
+    display: inline-block;
+    cursor: pointer;
+}
+
+.starFadeN {
+    background-image: url('../Images/StarFade.gif');
+    min-width: 30px;
+    min-height: 30px;
+    display: inline-block;
+}
+
+.starGlow {
+ 
+    background-image: url('../Images/StarGlow.gif');
+    min-width: 30px;
+    min-height: 30px;
+    display: inline-block;
+    cursor: pointer;
+}
+
+.starGlowN {
+    background-image: url('../Images/StarGlow.gif');
+    min-width: 30px;
+    min-height: 30px;
+    display: inline-block;
+}
+
+
+.capt {
+    background-color: #8b83cc;
+    width: 300px;
+    height: 100px;
+}
+
+#mainCaptcha {
+    position: relative;
+    left: 16px;
+    top: 5px;
+}
+
+
+#refresh {
+    position: relative;
+    left: 258px;
+    width: 30px;
+    height: 30px;
+    bottom: 31px;
+    background-color: #6651bd;
+    border: none;
+    color: white;
+    padding: 0px 9px;
+    font-size: 16px;
+    cursor: pointer;
+}
+/* Darker background on mouse-over */
+    #refresh:hover {
+        background-color: RoyalBlue;
+    }
+
+#txtInput, #Button1 {
+    position: relative;
+    left: 40px;
+    bottom: 40px;
+    height: 36px;
+}
